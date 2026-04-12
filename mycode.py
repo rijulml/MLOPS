@@ -11,8 +11,8 @@ data = {
 df = pd.DataFrame(data)
 
 # # Step 2: Add more rows using .loc
-df.loc[len(df)] = ["Charlie", 28, "Bangalore"]
-# df.loc[len(df)] = ["David", 35, "Hyderabad"]
+# df.loc[len(df)] = ["Charlie", 28, "Bangalore"]
+df.loc[len(df)] = ["David", 35, "Hyderabad"]
 
 # Step 3: Create 'data' folder if it doesn't exist
 os.makedirs("data", exist_ok=True)
