@@ -9,7 +9,7 @@ import logging
 # from dvclive import Live
 
 # Ensure the "logs" directory exists
-log_dir = '../logs'
+log_dir = './logs'
 os.makedirs(log_dir, exist_ok=True)
 
 # logging configuration
@@ -113,8 +113,8 @@ def save_metrics(metrics: dict, file_path: str) -> None:
 def main():
     try:
         # params = load_params(params_path='params.yaml')
-        clf = load_model('../models/model.pkl')
-        test_data = load_data('../data/processed/test_tfidf.csv')
+        clf = load_model('./models/model.pkl')
+        test_data = load_data('./data/processed/test_tfidf.csv')
         
         X_test = test_data.iloc[:, :-1].values
         y_test = test_data.iloc[:, -1].values
@@ -129,7 +129,7 @@ def main():
 
         #     live.log_params(params)
         
-        save_metrics(metrics, '../reports/metrics.json')
+        save_metrics(metrics, './reports/metrics.json')
     except Exception as e:
         logger.error('Failed to complete the model evaluation process: %s', e)
         print(f"Error: {e}")

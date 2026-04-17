@@ -6,7 +6,7 @@ import numpy as np
 import pickle
 
 # Logging 
-log_dir = '../logs'
+log_dir = './logs'
 os.makedirs(log_dir, exist_ok=True)
 
 logger = logging.getLogger('model_training')
@@ -80,13 +80,13 @@ def main():
         # params = load_params('params.yaml')['model_building']
         n_estimators=100
         random_state=42
-        train_data = load_data('../data/processed/train_tfidf.csv')
+        train_data = load_data('./data/processed/train_tfidf.csv')
         X_train = train_data.iloc[:, :-1].values
         y_train = train_data.iloc[:, -1].values
 
         clf = train_model(X_train, y_train, n_estimators, random_state)
         
-        model_save_path = '../models/model.pkl'
+        model_save_path = './models/model.pkl'
         save_model(clf, model_save_path)
 
     except Exception as e:

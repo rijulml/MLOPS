@@ -6,7 +6,7 @@ import logging
 
 
 # Logging 
-log_dir = '../logs'
+log_dir = './logs'
 os.makedirs(log_dir, exist_ok=True)
 
 logger = logging.getLogger('data_ingestion')
@@ -63,7 +63,7 @@ def main():
         df = load_data(data_url=data_url)
         processed_data = data_processing(df)
         train_data, test_data = train_test_split(processed_data, test_size=test_size, random_state=42)
-        save_data(train_data, test_data, data_path='../data')
+        save_data(train_data, test_data, data_path='./data')
     except Exception as e:
         logger.error('Failed to complete the data ingestion process %s', e)
 

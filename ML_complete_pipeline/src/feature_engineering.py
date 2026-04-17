@@ -6,7 +6,7 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from typing import Union
 
 # Logging 
-log_dir = '../logs'
+log_dir = './logs'
 os.makedirs(log_dir, exist_ok=True)
 
 logger = logging.getLogger('feature_engineering')
@@ -58,13 +58,13 @@ def save_data(train_data:pd.DataFrame, test_data:pd.DataFrame, data_path:str)->N
 
 def main():
     try:
-        train_data = load_data('../data/interim/train_processed_data.csv')
-        test_data = load_data('../data/interim/test_processed_data.csv')
+        train_data = load_data('./data/interim/train_processed_data.csv')
+        test_data = load_data('./data/interim/test_processed_data.csv')
 
         train_tfidf = apply_tfidf('text', 50, train_data, 'target')
         test_tfidf = apply_tfidf('text', 50, test_data, 'target')
 
-        save_data(train_tfidf, test_tfidf, '../data')
+        save_data(train_tfidf, test_tfidf, './data')
     except Exception as e:
         logger.error("Failed to complete the feature engineering process: %s", e)
 

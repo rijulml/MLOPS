@@ -12,7 +12,7 @@ import string
 
 
 # Logging 
-log_dir = '../logs'
+log_dir = './logs'
 os.makedirs(log_dir, exist_ok=True)
 
 logger = logging.getLogger('data_preprocessing')
@@ -70,14 +70,14 @@ def preprocess_data(df:pd.DataFrame, text_column:str, target_column:str)->pd.Dat
 
 def main():
     try:
-        train_data = pd.read_csv('../data/raw/train_data.csv')
-        test_data = pd.read_csv('../data/raw/test_data.csv')
+        train_data = pd.read_csv('./data/raw/train_data.csv')
+        test_data = pd.read_csv('./data/raw/test_data.csv')
         logger.debug('Data loaded Successfuly')
 
         processed_train_data = preprocess_data(train_data, 'text', 'target')
         processed_test_data = preprocess_data(test_data,'text', 'target')
 
-        data_path = os.path.join('../data', 'interim')
+        data_path = os.path.join('./data', 'interim')
         os.makedirs(data_path, exist_ok=True)
 
         processed_train_data.to_csv(os.path.join(data_path, 'train_processed_data.csv'), index=False)
