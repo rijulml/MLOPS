@@ -4,28 +4,10 @@ import logging
 import os
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from typing import Union
+from utils import get_logger, load_params
 
-# Logging 
-log_dir = './logs'
-os.makedirs(log_dir, exist_ok=True)
-
-logger = logging.getLogger('feature_engineering')
-
-logger.setLevel('DEBUG')
-
-filepath = os.path.join(log_dir,'feature_engineering.log')
-file_handler = logging.FileHandler(filepath)
-file_handler.setLevel('DEBUG')
-
-console_handler = logging.StreamHandler()
-console_handler.setLevel('DEBUG')
-
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-console_handler.setFormatter(formatter)
-file_handler.setFormatter(formatter)
-
-logger.addHandler(console_handler)
-logger.addHandler(file_handler)
+logger = get_logger(__name__)
+params = load_params('params.yaml')
 
 def load_data(file_path:str) -> pd.DataFrame:
     try:
@@ -58,11 +40,12 @@ def save_data(train_data:pd.DataFrame, test_data:pd.DataFrame, data_path:str)->N
 
 def main():
     try:
+        max_features = params['feature_engineering']['max_features']
         train_data = load_data('./data/interim/train_processed_data.csv')
         test_data = load_data('./data/interim/test_processed_data.csv')
 
-        train_tfidf = apply_tfidf('text', 50, train_data, 'target')
-        test_tfidf = apply_tfidf('text', 50, test_data, 'target')
+        train_tfidf = apply_tfidf('text', max_features, train_data, 'target')
+        test_tfidf = apply_tfidf('text', max_features, test_data, 'target')
 
         save_data(train_tfidf, test_tfidf, './data')
     except Exception as e:

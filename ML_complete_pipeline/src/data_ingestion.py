@@ -2,30 +2,16 @@ import numpy as np        # For numerical operations
 import pandas as pd       # For data manipulation and analysis
 import os
 from sklearn.model_selection import train_test_split
-import logging
+# import sys
+# import pathlib
 
 
-# Logging 
-log_dir = './logs'
-os.makedirs(log_dir, exist_ok=True)
+from utils import get_logger, load_params
 
-logger = logging.getLogger('data_ingestion')
-
-logger.setLevel('DEBUG')
-
-filepath = os.path.join(log_dir,'data_ingestion.log')
-file_handler = logging.FileHandler(filepath)
-file_handler.setLevel('DEBUG')
-
-console_handler = logging.StreamHandler()
-console_handler.setLevel('DEBUG')
-
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-console_handler.setFormatter(formatter)
-file_handler.setFormatter(formatter)
-
-logger.addHandler(console_handler)
-logger.addHandler(file_handler)
+logger = get_logger(__name__)
+logger.debug(f"logger initialized with name: {__name__}")
+params = load_params('params.yaml')
+logger.debug("Methods successfuly loaded from utils file")
 
 def load_data(data_url:str)->pd.DataFrame:
     try:
@@ -58,7 +44,8 @@ def save_data(train_data:pd.DataFrame, test_data:pd.DataFrame, data_path:str)->N
 
 def main():
     try:
-        test_size = 0.2
+        # test_size = 0.2
+        test_size = params['data_ingestion']['test_size']
         data_url='https://raw.githubusercontent.com/vikashishere/YT-MLOPS-Complete-ML-Pipeline/refs/heads/main/experiments/spam.csv'
         df = load_data(data_url=data_url)
         processed_data = data_processing(df)
@@ -67,5 +54,5 @@ def main():
     except Exception as e:
         logger.error('Failed to complete the data ingestion process %s', e)
 
-if __name__ == '__main__':
+if __name__ =="__main__":
     main()

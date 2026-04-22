@@ -9,29 +9,11 @@ nltk.download('stopwords')
 nltk.download('punkt')
 nltk.download('punkt_tab')
 import string
+from utils import get_logger, load_params
 
 
-# Logging 
-log_dir = './logs'
-os.makedirs(log_dir, exist_ok=True)
-
-logger = logging.getLogger('data_preprocessing')
-
-logger.setLevel('DEBUG')
-
-filepath = os.path.join(log_dir,'data_preprocessing.log')
-file_handler = logging.FileHandler(filepath)
-file_handler.setLevel('DEBUG')
-
-console_handler = logging.StreamHandler()
-console_handler.setLevel('DEBUG')
-
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-console_handler.setFormatter(formatter)
-file_handler.setFormatter(formatter)
-
-logger.addHandler(console_handler)
-logger.addHandler(file_handler)
+logger = get_logger(__name__)
+# params = load_params('params.yaml')
 
 def transform_text(text):
     """

@@ -4,28 +4,11 @@ from sklearn.ensemble import RandomForestClassifier
 import logging
 import numpy as np
 import pickle
+from utils import get_logger, load_params
 
-# Logging 
-log_dir = './logs'
-os.makedirs(log_dir, exist_ok=True)
-
-logger = logging.getLogger('model_training')
-
-logger.setLevel('DEBUG')
-
-filepath = os.path.join(log_dir,'model_training.log')
-file_handler = logging.FileHandler(filepath)
-file_handler.setLevel('DEBUG')
-
-console_handler = logging.StreamHandler()
-console_handler.setLevel('DEBUG')
-
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-console_handler.setFormatter(formatter)
-file_handler.setFormatter(formatter)
-
-logger.addHandler(console_handler)
-logger.addHandler(file_handler)
+logger = get_logger(__name__)
+params = load_params('params.yaml')
+# logger.debug(f"Parameters available for model building {params}")
 
 
 def load_data(file_path:str) -> pd.DataFrame:
@@ -44,7 +27,6 @@ def train_model(X_train:np.ndarray, y_train:np.ndarray, n_estimators:int, random
             raise ValueError("The number of samples in X_train and y_train must be the same.")
         
         logger.debug("Initializing Random Forest model with paramerters")
-
         clf = RandomForestClassifier(n_estimators=n_estimators, random_state=random_state)
         logger.debug("Model training started with %d samples", X_train.shape[0])
 
@@ -77,9 +59,8 @@ def save_model(model, file_path: str) -> None:
 
 def main():
     try:
-        # params = load_params('params.yaml')['model_building']
-        n_estimators=100
-        random_state=42
+        n_estimators = params['model_building']['n_estimators']
+        random_state = params['model_building']['random_state']
         train_data = load_data('./data/processed/train_tfidf.csv')
         X_train = train_data.iloc[:, :-1].values
         y_train = train_data.iloc[:, -1].values
@@ -91,7 +72,7 @@ def main():
 
     except Exception as e:
         logger.error('Failed to complete the model building process: %s', e)
-        print(f"Error: {e}")
+        # print(f"Error: {e}")
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
