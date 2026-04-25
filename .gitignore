@@ -207,3 +207,7 @@ marimo/_lsp/
 __marimo__/
 /data
 /S3
+ML_complete_pipeline/data
+ML_complete_pipeline/logs
+ML_complete_pipeline/models
+ML_complete_pipeline/reports
