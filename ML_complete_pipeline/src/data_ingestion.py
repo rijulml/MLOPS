@@ -9,7 +9,7 @@ from sklearn.model_selection import train_test_split
 from utils import get_logger, load_params
 
 logger = get_logger(__name__)
-logger.debug(f"logger initialized with name: {__name__}")
+# logger.debug(f"logger initialized with name: {__name__}")
 params = load_params('params.yaml')
 logger.debug("Methods successfuly loaded from utils file")
 
